@@ -1,0 +1,21 @@
+{
+  "hallmarkVersion": "2.0.0",
+  "skillReference": "https://github.com/nutlope/hallmark",
+  "macrostructure": "05-workbench",
+  "theme": "Cobalt-Paper",
+  "genre": "modern-minimal",
+  "stack": {
+    "backend": "Node.js (native http + JSON persistence in data_store.json)",
+    "frontend": "Vanilla HTML/CSS/JS Workbench (public/index.html)",
+    "fontStack": [
+      "Instrument Serif",
+      "Plus Jakarta Sans",
+      "JetBrains Mono"
+    ]
+  },
+  "preserved": [
+    "CSS root custom property tokens",
+    "US1-US9 REST API routes",
+    "data_store.json schema"
+  ]
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AeroLeave Global — International Flight Booking &amp; Corporate Travel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="#flights" class="brand" id="brandHomeLink">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">AeroLeave</span>
+          <span class="brand-tag">GLOBAL</span>
+        </span>
+      </a>
+
+      <nav class="nav-primary" aria-label="Navigasi Utama">
+        <button type="button" class="nav-btn active" data-view="flights">Penerbangan</button>
+        <button type="button" class="nav-btn" data-view="airports">Bandara &amp; Hub</button>
+        <button type="button" class="nav-btn" data-view="trips">Perjalanan Saya</button>
+        <button type="button" class="nav-btn" data-view="club">Frequent Flyer</button>
+        <button type="button" class="nav-btn" data-view="corporate">Corporate &amp; HR</button>
+      </nav>
+
+      <div class="topbar-utils">
+        <div class="currency-wrap" title="Mata Uang Tampilan">
+          <label for="currencySelect" class="sr-only">Mata uang</label>
+          <select id="currencySelect" class="currency-select">
+            <option value="IDR">IDR (Rp)</option>
+            <option value="USD">USD ($)</option>
+            <option value="SGD">SGD (S$)</option>
+            <option value="JPY">JPY (¥)</option>
+            <option value="EUR">EUR (€)</option>
+            <option value="GBP">GBP (£)</option>
+            <option value="AUD">AUD (A$)</option>
+          </select>
+        </div>
+        <button type="button" class="btn-ghost-sm" id="btnResetDemo" title="Reset data ke kondisi awal">Reset Data</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="appRoot">
+    <div class="container" style="padding:3rem 1.5rem;text-align:center;color:var(--ink-muted);">
+      Memuat AeroLeave Global...
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <strong>AeroLeave Global</strong> · Platform Pemesanan Penerbangan Internasional, Panduan Bandara &amp; Manajemen Perjalanan Korporat
+      </div>
+      <div class="footer-meta">
+        <span class="mono" id="footerSyncStatus">Sinkronisasi real-time aktif · 14 Bandara Internasional &amp; Domestik</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Host -->
+  <div id="modalBackdrop" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div id="modalContainer" class="modal-dialog"></div>
+  </div>
+
+  <!-- Toast Host -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/components.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

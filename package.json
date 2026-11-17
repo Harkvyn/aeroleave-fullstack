@@ -1,0 +1,14 @@
+{
+  "name": "aeroleave-hallmark-fullstack",
+  "version": "1.0.0",
+  "description": "Full-stack Prototype Manajemen Cuti HRD & Booking Pesawat (US1-US9) dengan Desain Hallmark",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node server.js --test"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "MIT"
+}

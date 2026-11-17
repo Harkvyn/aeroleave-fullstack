@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AeroLeave Global — International Flight Booking &amp; Corporate Travel</title>
+  <title>AeroLeave Global — Corporate Travel, HR Leave &amp; International Flight Booking</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -24,13 +24,7 @@
         </span>
       </a>
 
-      <nav class="nav-primary" aria-label="Navigasi Utama">
-        <button type="button" class="nav-btn active" data-view="flights">Penerbangan</button>
-        <button type="button" class="nav-btn" data-view="airports">Bandara &amp; Hub</button>
-        <button type="button" class="nav-btn" data-view="trips">Perjalanan Saya</button>
-        <button type="button" class="nav-btn" data-view="club">Frequent Flyer</button>
-        <button type="button" class="nav-btn" data-view="corporate">Corporate &amp; HR</button>
-      </nav>
+      <nav class="nav-primary" id="primaryNav" aria-label="Navigasi Utama"></nav>
 
       <div class="topbar-utils">
         <div class="currency-wrap" title="Mata Uang Tampilan">
@@ -45,7 +39,11 @@
             <option value="AUD">AUD (A$)</option>
           </select>
         </div>
-        <button type="button" class="btn-ghost-sm" id="btnResetDemo" title="Reset data ke kondisi awal">Reset Data</button>
+        <button type="button" class="actor-chip" id="btnActorSwitcher" title="Ganti Aktor / Masuk Akun">
+          <span class="actor-dot" aria-hidden="true"></span>
+          <span id="actorChipLabel">Masuk / Pilih Aktor</span>
+        </button>
+        <button type="button" class="btn-ghost-sm hidden" id="btnResetDemo" title="Reset data demo SQLite">Reset Demo</button>
       </div>
     </div>
   </header>
@@ -59,25 +57,22 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <div>
-        <strong>AeroLeave Global</strong> · Platform Pemesanan Penerbangan Internasional, Panduan Bandara &amp; Manajemen Perjalanan Korporat
+        <strong>AeroLeave Global</strong> · Corporate Travel, HR Leave &amp; International Flight Platform (SQLite + RBAC)
       </div>
       <div class="footer-meta">
-        <span class="mono" id="footerSyncStatus">Sinkronisasi real-time aktif · 14 Bandara Internasional &amp; Domestik</span>
+        <span class="mono" id="footerSyncStatus">Menghubungkan ke SQLite store...</span>
       </div>
     </div>
   </footer>
 
   <!-- Modal Host -->
   <div id="modalBackdrop" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div id="modalContainer" class="modal-dialog"></div>
+    <div id="modalContainer" class="modal-dialog" tabindex="-1"></div>
   </div>
 
   <!-- Toast Host -->
   <div id="toastContainer" class="toast-container" aria-live="polite"></div>
 
-  <script src="/js/utils.js"></script>
-  <script src="/js/api.js"></script>
-  <script src="/js/components.js"></script>
-  <script src="/js/app.js"></script>
+  <script type="module" src="/js/app.js"></script>
 </body>
 </html>

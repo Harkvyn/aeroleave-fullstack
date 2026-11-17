@@ -204,6 +204,43 @@ button, input, select, textarea {
 }
 .btn-ghost-sm:hover { background: var(--bg-subtle); color: var(--ink-primary); }
 
+.actor-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.48rem;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-surface);
+  border-radius: 999px;
+  padding: 0.36rem 0.85rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--navy-900);
+  cursor: pointer;
+  transition: all 140ms ease;
+}
+.actor-chip:hover {
+  border-color: var(--accent-cobalt);
+  background: var(--accent-cobalt-soft);
+}
+.actor-chip.signed-in {
+  background: var(--navy-900);
+  border-color: var(--navy-900);
+  color: #fff;
+}
+.actor-chip.signed-in:hover {
+  background: var(--navy-800);
+}
+.actor-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ink-muted);
+}
+.actor-chip.signed-in .actor-dot {
+  background: #34d399;
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.25);
+}
+
 /* ---------------------------------------------------------------------------
    HERO BANNER & FLOATING SEARCH ENGINE
    --------------------------------------------------------------------------- */
@@ -283,6 +320,12 @@ button, input, select, textarea {
   border-radius: var(--radius-md);
   padding: 0.75rem 1rem;
   min-width: 240px;
+  max-width: 100%;
+  transition: border-color 150ms ease, transform 150ms ease;
+}
+.hero-airport-badge:hover {
+  border-color: rgba(147, 197, 253, 0.55);
+  transform: translateY(-2px);
 }
 
 .hero-airport-badge .label {
@@ -383,7 +426,7 @@ button, input, select, textarea {
 
 .search-grid {
   display: grid;
-  grid-template-columns: 1.2fr auto 1.2fr 0.9fr 0.9fr 0.7fr auto;
+  grid-template-columns: 1.25fr auto 1.25fr 0.95fr 0.95fr auto;
   gap: 0.75rem;
   align-items: end;
 }
@@ -517,8 +560,11 @@ button, input, select, textarea {
 .btn-navy:hover { background: var(--navy-800); }
 .btn-secondary { background: var(--bg-surface); border-color: var(--border-strong); color: var(--ink-primary); }
 .btn-secondary:hover { background: var(--bg-subtle); }
+.btn-success { background: var(--status-confirmed-bg); color: var(--status-confirmed-ink); border-color: rgba(15, 98, 57, 0.28); }
+.btn-success:hover { background: #d0eedf; }
 .btn-danger { background: var(--status-danger-bg); color: var(--status-danger-ink); border-color: rgba(153, 27, 27, 0.25); }
 .btn-danger:hover { background: #f8d4d2; }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
 
 .badge {
   display: inline-flex;
@@ -683,6 +729,24 @@ button, input, select, textarea {
   align-items: center;
   box-shadow: var(--shadow-sm);
   transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.flight-card--trip {
+  grid-template-columns: 230px minmax(0, 1fr) 260px;
+}
+
+.trip-actions-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.45rem;
+}
+
+.trip-actions-row {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .flight-card:hover {
@@ -1077,6 +1141,14 @@ button, input, select, textarea {
 
 .bp-main { padding: 1.25rem 1.35rem; }
 
+.bp-route-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+}
+
 .bp-stub {
   border-left: 2px dashed var(--border-strong);
   background: var(--bg-paper);
@@ -1088,6 +1160,119 @@ button, input, select, textarea {
   text-align: center;
   gap: 0.65rem;
 }
+
+/* Actor Portal, Multi-Pax Seat Slots, Hub Selected Bar & Audit Trail */
+.actor-banner {
+  background: linear-gradient(125deg, var(--navy-950) 0%, var(--navy-800) 100%);
+  color: #fff;
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.actor-role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 0.75rem;
+}
+.actor-card {
+  border: 1.5px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  padding: 0.9rem;
+  background: var(--bg-surface);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+.actor-card:hover {
+  border-color: var(--accent-cobalt);
+  box-shadow: var(--shadow-sm);
+}
+.actor-card.active {
+  border-color: var(--accent-cobalt);
+  background: var(--accent-cobalt-soft);
+}
+
+.pax-seat-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.85rem;
+}
+.pax-slot-pill {
+  border: 1.5px solid var(--border-strong);
+  background: var(--bg-surface);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.pax-slot-pill.active {
+  border-color: var(--accent-cobalt);
+  background: var(--accent-cobalt-soft);
+  color: var(--accent-cobalt-ink);
+}
+.pax-row-card {
+  background: var(--bg-paper);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  margin-top: 0.6rem;
+}
+
+.hub-selected-bar {
+  margin-top: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.hub-pill-bar {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-top: 0.55rem;
+}
+.hub-mini-pill {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: #e2e8f0;
+  border-radius: 999px;
+  padding: 0.18rem 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.hub-mini-pill.active, .hub-mini-pill:hover {
+  background: #fbbf24;
+  color: #081226;
+  border-color: #fbbf24;
+}
+
+.audit-row {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border-hairline);
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.84rem;
+}
+.audit-row:last-child { border-bottom: none; }
 
 /* Tables & Corporate Panels */
 .table-wrap {
@@ -1182,7 +1367,9 @@ td.num, th.num { text-align: right; }
   .swap-btn { display: none; }
   .results-layout { grid-template-columns: 1fr; }
   .filter-sidebar { position: static; }
-  .flight-card { grid-template-columns: 1fr; }
+  .flight-card, .flight-card--trip { grid-template-columns: 1fr; }
+  .trip-actions-col { align-items: flex-start; border-top: 1px solid var(--border-hairline); padding-top: 0.85rem; }
+  .trip-actions-row { justify-content: flex-start; }
   .price-block { border-left: none; border-top: 1px solid var(--border-hairline); padding-left: 0; padding-top: 0.85rem; text-align: left; }
   .route-airport-strip { grid-template-columns: 1fr; }
   .bp-body { grid-template-columns: 1fr; }
@@ -1192,6 +1379,10 @@ td.num, th.num { text-align: right; }
 @media (max-width: 680px) {
   .grid-2, .grid-3, .grid-4, .fare-grid, .metric-strip, .stepper { grid-template-columns: 1fr; }
   .search-grid { grid-template-columns: 1fr; }
+  .hero-airport-badge { min-width: 0; width: 100%; }
+  .bp-header { flex-direction: column; align-items: flex-start; gap: 0.45rem; }
+  .bp-route-header { flex-direction: column; align-items: stretch; text-align: center; }
+  .bp-route-header > div:last-child { text-align: center !important; }
 }
 
 @media print {

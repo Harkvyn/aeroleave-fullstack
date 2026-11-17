@@ -3,9 +3,10 @@
  * ============================================================================
  * AEROLEAVE GLOBAL — FULL-STACK INTERNATIONAL FLIGHT BOOKING & CORPORATE TRAVEL
  * ============================================================================
- * Arsitektur  : Node.js (v18+) Zero-Dependency Modular REST API + JSON Store
+ * Arsitektur  : Node.js (v22+) Zero-Dependency Modular REST API + SQLite (node:sqlite)
  * Mendukung   : Seluruh API US1-US9 + Rute Internasional, Katalog Bandara,
- *               Interactive Seat Map, Fare Tiers, Checkout Payment, & Boarding Pass
+ *               Interactive Seat Map, Fare Tiers, Checkout Payment, Boarding Pass,
+ *               & Autentikasi/RBAC 5 Aktor Korporat
  *
  * Menjalankan Server : node server.js (http://localhost:4000)
  * Menjalankan Test   : node server.js --test

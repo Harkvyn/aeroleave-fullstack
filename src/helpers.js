@@ -199,6 +199,7 @@ function buildEmployeeLeaveSummary(employee, leaveRequests, currentYear, yearFil
     leaveHistory: allEmployeeLeaves.map((lv) => ({
       leaveId: lv.leaveId,
       employeeName: lv.employeeName,
+      leaveType: lv.leaveType || 'annual',
       leavePeriod: {
         startDate: lv.startDate,
         endDate: lv.endDate,
@@ -207,9 +208,28 @@ function buildEmployeeLeaveSummary(employee, leaveRequests, currentYear, yearFil
       durationDays: lv.durationDays,
       reason: lv.reason,
       status: lv.status,
-      submittedAt: lv.submittedAt
+      submittedAt: lv.submittedAt,
+      reviewedByName: lv.reviewedByName || null,
+      reviewedAt: lv.reviewedAt || null,
+      decisionNote: lv.decisionNote || null
     }))
   };
+}
+
+function normalizeSeatCode(code) {
+  if (!code) return '';
+  return String(code).trim().toUpperCase().replace(/^0+/, '');
+}
+
+function datesOverlap(startA, endA, startB, endB) {
+  return String(startA) <= String(endB) && String(endA) >= String(startB);
+}
+
+function createHttpError(status, message, extra = {}) {
+  const err = new Error(message);
+  err.httpStatus = status;
+  err.extra = extra;
+  return err;
 }
 
 function buildCabinSeatMap(flight, bookings) {
@@ -236,11 +256,22 @@ function buildCabinSeatMap(flight, bookings) {
     extraLegroomRows = [6];
   }
 
-  const bookedSeats = new Set(
-    bookings
-      .filter((b) => b.flightId === flight.flightId && b.status !== 'cancelled' && b.seatNumber)
-      .map((b) => String(b.seatNumber).toUpperCase().replace(/^0+/, ''))
-  );
+  const bookedSeats = new Set();
+  for (const b of bookings) {
+    if (b.flightId !== flight.flightId || b.status === 'cancelled') continue;
+    if (Array.isArray(b.passengers) && b.passengers.length > 0) {
+      for (const p of b.passengers) {
+        const code = normalizeSeatCode(p.seatNumber);
+        if (code) bookedSeats.add(code);
+      }
+    }
+    if (b.seatNumber) {
+      for (const part of String(b.seatNumber).split(',')) {
+        const code = normalizeSeatCode(part);
+        if (code) bookedSeats.add(code);
+      }
+    }
+  }
 
   // Kursi terisi bawaan pesawat yang deterministik berdasar flightId
   const hashSeed = flight.flightId.split('').reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
@@ -283,17 +314,20 @@ function buildCabinSeatMap(flight, bookings) {
   };
 }
 
-function computeBookingPricing(flight, fareTierId, seatFee = 0, passengerCount = 1) {
+function computeBookingPricing(flight, fareTierId, seatFeeOrList = 0, passengerCount = 1) {
   const tier = FARE_TIERS[fareTierId] || FARE_TIERS.Standard;
   const baseUnit = Math.round(flight.price * tier.multiplier);
   const taxesAndPSC = flight.isInternational ? 350000 : 125000;
   const count = Math.max(1, Number(passengerCount) || 1);
-  const totalAmount = (baseUnit + taxesAndPSC + (Number(seatFee) || 0)) * count;
+  const seatFeeTotal = Array.isArray(seatFeeOrList)
+    ? seatFeeOrList.reduce((acc, fee) => acc + (Number(fee) || 0), 0)
+    : (Number(seatFeeOrList) || 0) * count;
+  const totalAmount = (baseUnit + taxesAndPSC) * count + seatFeeTotal;
   return {
     fareTier: tier.id,
     unitFare: baseUnit,
     taxesAndPSC,
-    seatFee: Number(seatFee) || 0,
+    seatFee: seatFeeTotal,
     passengerCount: count,
     totalAmount
   };
@@ -309,6 +343,9 @@ module.exports = {
   generateBookingReference,
   buildAirlinePriceSummary,
   buildEmployeeLeaveSummary,
+  normalizeSeatCode,
+  datesOverlap,
+  createHttpError,
   buildCabinSeatMap,
   computeBookingPricing
 };

@@ -1,0 +1,5 @@
+node_modules/
+aeroleave.db
+aeroleave.db-wal
+aeroleave.db-shm
+*.log

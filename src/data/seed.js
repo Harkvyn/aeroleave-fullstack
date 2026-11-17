@@ -1,4 +1,5 @@
 const { AIRPORTS } = require('./airports');
+const { getDemoCredentials } = require('../auth');
 
 const CURRENCIES = {
   IDR: { code: 'IDR', symbol: 'Rp', rateFromIDR: 1, label: 'Indonesian Rupiah' },
@@ -772,10 +773,12 @@ function createInternationalFlights() {
 }
 
 function createInitialState() {
+  const demoCreds = getDemoCredentials();
+
   return {
     meta: {
-      systemName: 'AeroLeave & Flight Booking Prototype API',
-      version: '2.0.0',
+      systemName: 'AeroLeave Global — Corporate Travel, HR Leave & Flight Booking API',
+      version: '3.0.0',
       hallmarkReference: 'https://github.com/nutlope/hallmark',
       currentYear: 2026,
       currency: 'IDR',
@@ -784,6 +787,136 @@ function createInitialState() {
 
     airports: AIRPORTS,
     currencies: CURRENCIES,
+
+    // --- AKUN AKTOR REAL-WORLD (RBAC & DEMO ACCOUNTS) ---
+    users: [
+      {
+        userId: 'USR-001',
+        email: 'budi.santoso@ooalah.id',
+        fullName: 'Budi Santoso',
+        role: 'employee',
+        roleLabel: 'Staff Ticketing · Engineering',
+        department: 'Engineering',
+        employeeId: 'EMP-001',
+        memberId: null,
+        visitorId: null,
+        passwordSalt: demoCreds.salt,
+        passwordHash: demoCreds.hash,
+        createdAt: '2026-01-10T08:00:00Z'
+      },
+      {
+        userId: 'USR-002',
+        email: 'siti.rahmawati@ooalah.id',
+        fullName: 'Siti Rahmawati',
+        role: 'employee',
+        roleLabel: 'Staff CS · Product & Design',
+        department: 'Product & Design',
+        employeeId: 'EMP-002',
+        memberId: null,
+        visitorId: null,
+        passwordSalt: demoCreds.salt,
+        passwordHash: demoCreds.hash,
+        createdAt: '2026-01-10T08:00:00Z'
+      },
+      {
+        userId: 'USR-003',
+        email: 'andi.pratama@ooalah.id',
+        fullName: 'Andi Pratama',
+        role: 'employee',
+        roleLabel: 'Agen Loket · Operations',
+        department: 'Operations & Travel',
+        employeeId: 'EMP-003',
+        memberId: null,
+        visitorId: null,
+        passwordSalt: demoCreds.salt,
+        passwordHash: demoCreds.hash,
+        createdAt: '2026-01-10T08:00:00Z'
+      },
+      {
+        userId: 'USR-HR-001',
+        email: 'dewi.lestari@ooalah.id',
+        fullName: 'Dewi Lestari',
+        role: 'hr_manager',
+        roleLabel: 'HRD Manajer',
+        department: 'Human Resources',
+        employeeId: 'EMP-004',
+        memberId: null,
+        visitorId: null,
+        passwordSalt: demoCreds.salt,
+        passwordHash: demoCreds.hash,
+        createdAt: '2026-01-10T08:00:00Z'
+      },
+      {
+        userId: 'USR-FT-001',
+        email: 'raka.mahendra@example.id',
+        fullName: 'Raka Mahendra',
+        role: 'frequent_traveller',
+        roleLabel: 'Frequent Traveller · Platinum',
+        department: 'AeroLeave Club',
+        employeeId: null,
+        memberId: 'FT-001',
+        visitorId: null,
+        passwordSalt: demoCreds.salt,
+        passwordHash: demoCreds.hash,
+        createdAt: '2026-01-12T08:00:00Z'
+      },
+      {
+        userId: 'USR-FT-002',
+        email: 'nadia.kusuma@example.id',
+        fullName: 'Nadia Kusuma',
+        role: 'frequent_traveller',
+        roleLabel: 'Frequent Traveller · Gold',
+        department: 'AeroLeave Club',
+        employeeId: null,
+        memberId: 'FT-002',
+        visitorId: null,
+        passwordSalt: demoCreds.salt,
+        passwordHash: demoCreds.hash,
+        createdAt: '2026-01-15T08:00:00Z'
+      },
+      {
+        userId: 'USR-TM-001',
+        email: 'travel.manager@ooalah.id',
+        fullName: 'Hendrawan Wijaya',
+        role: 'travel_manager',
+        roleLabel: 'Manajer Travel',
+        department: 'Travel Operations',
+        employeeId: null,
+        memberId: null,
+        visitorId: null,
+        passwordSalt: demoCreds.salt,
+        passwordHash: demoCreds.hash,
+        createdAt: '2026-01-10T08:00:00Z'
+      },
+      {
+        userId: 'USR-VIS-001',
+        email: 'dimas.anggara@visitor.id',
+        fullName: 'Dimas Anggara',
+        role: 'visitor',
+        roleLabel: 'Pelanggan / Visitor',
+        department: 'Customer Account',
+        employeeId: null,
+        memberId: null,
+        visitorId: 'VIS-001',
+        passwordSalt: demoCreds.salt,
+        passwordHash: demoCreds.hash,
+        createdAt: '2026-02-01T08:00:00Z'
+      },
+      {
+        userId: 'USR-VIS-002',
+        email: 'larasati.putri@visitor.id',
+        fullName: 'Larasati Putri',
+        role: 'visitor',
+        roleLabel: 'Pelanggan / Visitor',
+        department: 'Customer Account',
+        employeeId: null,
+        memberId: null,
+        visitorId: 'VIS-002',
+        passwordSalt: demoCreds.salt,
+        passwordHash: demoCreds.hash,
+        createdAt: '2026-02-01T08:00:00Z'
+      }
+    ],
 
     // --- DATA US1: PEGAWAI & PENGAJUAN CUTI (HRD MANAJER) ---
     employees: [
@@ -815,7 +948,7 @@ function createInitialState() {
         employeeId: 'EMP-004',
         employeeName: 'Dewi Lestari',
         department: 'Human Resources',
-        position: 'HR Generalist',
+        position: 'HR Manager',
         email: 'dewi.lestari@ooalah.id',
         annualLeaveQuota: 12
       }
@@ -826,56 +959,81 @@ function createInitialState() {
         leaveId: 'LV-2026-001',
         employeeId: 'EMP-001',
         employeeName: 'Budi Santoso',
+        leaveType: 'annual',
         startDate: '2026-03-10',
         endDate: '2026-03-12',
         durationDays: 3,
         reason: 'Acara keluarga di Yogyakarta',
         status: 'approved',
-        submittedAt: '2026-02-25T09:00:00Z'
+        submittedAt: '2026-02-25T09:00:00Z',
+        reviewedBy: 'USR-HR-001',
+        reviewedByName: 'Dewi Lestari',
+        reviewedAt: '2026-02-26T10:00:00Z',
+        decisionNote: 'Disetujui sesuai jadwal tim Engineering.'
       },
       {
         leaveId: 'LV-2026-002',
         employeeId: 'EMP-001',
         employeeName: 'Budi Santoso',
+        leaveType: 'annual',
         startDate: '2026-11-20',
         endDate: '2026-11-24',
         durationDays: 5,
         reason: 'Liburan akhir tahun ke Denpasar, Bali',
         status: 'approved',
-        submittedAt: '2026-11-01T10:15:00Z'
+        submittedAt: '2026-11-01T10:15:00Z',
+        reviewedBy: 'USR-HR-001',
+        reviewedByName: 'Dewi Lestari',
+        reviewedAt: '2026-11-02T09:30:00Z',
+        decisionNote: 'Handover sprint selesai, disetujui.'
       },
       {
         leaveId: 'LV-2026-003',
         employeeId: 'EMP-002',
         employeeName: 'Siti Rahmawati',
+        leaveType: 'annual',
         startDate: '2026-11-22',
         endDate: '2026-11-25',
         durationDays: 4,
         reason: 'Cuti tahunan ke Surabaya',
         status: 'approved',
-        submittedAt: '2026-11-05T14:20:00Z'
+        submittedAt: '2026-11-05T14:20:00Z',
+        reviewedBy: 'USR-HR-001',
+        reviewedByName: 'Dewi Lestari',
+        reviewedAt: '2026-11-06T08:40:00Z',
+        decisionNote: 'Disetujui oleh HRD.'
       },
       {
         leaveId: 'LV-2026-004',
         employeeId: 'EMP-003',
         employeeName: 'Andi Pratama',
+        leaveType: 'annual',
         startDate: '2026-12-01',
         endDate: '2026-12-03',
         durationDays: 3,
         reason: 'Keperluan pribadi di Jakarta',
         status: 'pending',
-        submittedAt: '2026-11-12T08:45:00Z'
+        submittedAt: '2026-11-12T08:45:00Z',
+        reviewedBy: null,
+        reviewedByName: null,
+        reviewedAt: null,
+        decisionNote: null
       },
       {
         leaveId: 'LV-2025-099',
         employeeId: 'EMP-001',
         employeeName: 'Budi Santoso',
+        leaveType: 'annual',
         startDate: '2025-12-22',
         endDate: '2025-12-26',
         durationDays: 5,
         reason: 'Cuti akhir tahun 2025',
         status: 'approved',
-        submittedAt: '2025-12-01T08:00:00Z'
+        submittedAt: '2025-12-01T08:00:00Z',
+        reviewedBy: 'USR-HR-001',
+        reviewedByName: 'Dewi Lestari',
+        reviewedAt: '2025-12-02T09:00:00Z',
+        decisionNote: 'Disetujui.'
       }
     ],
 
@@ -919,14 +1077,18 @@ function createInitialState() {
         visitorName: 'Dimas Anggara',
         visitorEmail: 'dimas.anggara@visitor.id',
         visitorPhone: '+6281299887766',
-        identityNumber: '3578041208980003'
+        identityNumber: '3578041208980003',
+        company: 'Nusantara Advisory',
+        visitPurpose: 'Audit Arsitektur Cloud Q4'
       },
       {
         visitorId: 'VIS-002',
         visitorName: 'Larasati Putri',
         visitorEmail: 'larasati.putri@visitor.id',
         visitorPhone: '+6281355443322',
-        identityNumber: '3171022401990005'
+        identityNumber: '3171022401990005',
+        company: 'Studio Design Nusantara',
+        visitPurpose: 'Keynote Workshop Sistem Informasi'
       }
     ],
 
@@ -936,13 +1098,21 @@ function createInitialState() {
         bookingId: 'BK-2026-001',
         bookingReference: 'HLM-CONF01',
         bookingType: 'user',
-        userId: 'USR-001',
+        travelPurpose: 'online',
+        bookedByUserId: 'USR-VIS-002',
+        bookedByRole: 'visitor',
+        userId: 'USR-VIS-002',
         memberId: null,
-        visitorId: null,
-        passengerName: 'Farhan Akbar',
-        passengerEmail: 'farhan.akbar@example.id',
-        passengerPhone: '+6281234567890',
-        identityNumber: '3273010101970001',
+        visitorId: 'VIS-002',
+        passengerName: 'Larasati Putri',
+        passengerEmail: 'larasati.putri@visitor.id',
+        passengerPhone: '+6281355443322',
+        identityNumber: '3171022401990005',
+        nationality: 'Indonesia',
+        passengerCount: 1,
+        passengers: [
+          { fullName: 'Larasati Putri', identityNumber: '3171022401990005', nationality: 'Indonesia', seatNumber: '12A', seatFee: 0 }
+        ],
         flightId: 'FL-GA402',
         flightNumber: 'GA-402',
         airline: 'Garuda Indonesia',
@@ -951,30 +1121,47 @@ function createInitialState() {
         date: '2026-11-20',
         departureTime: '08:00',
         arrivalTime: '10:55',
-        price: 1850000,
+        basePrice: 1850000,
+        price: 1975000,
         cabinClass: 'Economy',
         fareTier: 'Standard',
         seatNumber: '12A',
         terminalOrigin: 'Terminal 3',
         gate: 'G14',
+        paymentMethod: 'QRIS / Virtual Account Bank',
+        paymentCurrency: 'IDR',
+        paidAmount: 1975000,
+        paidAt: '2026-11-15T10:05:00Z',
         status: 'confirmed',
         authorizedByTravelManager: true,
+        authorizedByUserId: 'USR-TM-001',
         authorizedAt: '2026-11-15T11:00:00Z',
+        authorizationNote: 'Pembayaran online terkonfirmasi.',
         ticketValidated: true,
+        validatedAt: '2026-11-15T11:00:00Z',
         eTicketNumber: 'ETKT-GA402-9001',
+        milesEarned: 0,
         createdAt: '2026-11-15T10:00:00Z'
       },
       {
         bookingId: 'BK-2026-002',
         bookingReference: 'HLM-BOOK02',
         bookingType: 'frequent_traveller',
-        userId: null,
+        travelPurpose: 'online',
+        bookedByUserId: 'USR-FT-001',
+        bookedByRole: 'frequent_traveller',
+        userId: 'USR-FT-001',
         memberId: 'FT-001',
         visitorId: null,
         passengerName: 'Raka Mahendra',
         passengerEmail: 'raka.mahendra@example.id',
         passengerPhone: '+6281122334455',
         identityNumber: '3573011505950001',
+        nationality: 'Indonesia',
+        passengerCount: 1,
+        passengers: [
+          { fullName: 'Raka Mahendra', identityNumber: '3573011505950001', nationality: 'Indonesia', seatNumber: '14C', seatFee: 0 }
+        ],
         flightId: 'FL-QG680',
         flightNumber: 'QG-680',
         airline: 'Citilink',
@@ -983,30 +1170,47 @@ function createInitialState() {
         date: '2026-11-20',
         departureTime: '08:15',
         arrivalTime: '11:10',
+        basePrice: 1250000,
         price: 1250000,
         cabinClass: 'Economy',
         fareTier: 'Standard',
         seatNumber: '14C',
         terminalOrigin: 'Terminal 3',
         gate: 'G09',
+        paymentMethod: 'QRIS / Virtual Account Bank',
+        paymentCurrency: 'IDR',
+        paidAmount: null,
+        paidAt: null,
         status: 'booked',
         authorizedByTravelManager: false,
+        authorizedByUserId: null,
         authorizedAt: null,
+        authorizationNote: null,
         ticketValidated: false,
+        validatedAt: null,
         eTicketNumber: 'ETKT-QG680-9002',
+        milesEarned: 1250,
         createdAt: '2026-11-16T08:30:00Z'
       },
       {
         bookingId: 'BK-2026-003',
         bookingReference: 'HLM-WAIT03',
         bookingType: 'visitor',
-        userId: null,
+        travelPurpose: 'offline_desk',
+        bookedByUserId: 'USR-003',
+        bookedByRole: 'employee',
+        userId: 'USR-VIS-001',
         memberId: null,
         visitorId: 'VIS-001',
         passengerName: 'Dimas Anggara',
         passengerEmail: 'dimas.anggara@visitor.id',
         passengerPhone: '+6281299887766',
         identityNumber: '3578041208980003',
+        nationality: 'Indonesia',
+        passengerCount: 1,
+        passengers: [
+          { fullName: 'Dimas Anggara', identityNumber: '3578041208980003', nationality: 'Indonesia', seatNumber: '18B', seatFee: 0 }
+        ],
         flightId: 'FL-ID6502',
         flightNumber: 'ID-6502',
         airline: 'Batik Air',
@@ -1015,30 +1219,47 @@ function createInitialState() {
         date: '2026-11-20',
         departureTime: '08:30',
         arrivalTime: '11:25',
-        price: 1480000,
+        basePrice: 1480000,
+        price: 1605000,
         cabinClass: 'Economy',
         fareTier: 'Standard',
         seatNumber: '18B',
         terminalOrigin: 'Terminal 2E',
         gate: 'E04',
+        paymentMethod: null,
+        paymentCurrency: 'IDR',
+        paidAmount: null,
+        paidAt: null,
         status: 'waiting for the payment',
         authorizedByTravelManager: false,
+        authorizedByUserId: null,
         authorizedAt: null,
+        authorizationNote: 'Dipesankan di loket oleh agen Andi Pratama, menunggu pembayaran pelanggan.',
         ticketValidated: false,
+        validatedAt: null,
         eTicketNumber: 'ETKT-ID6502-9003',
+        milesEarned: 0,
         createdAt: '2026-11-16T09:45:00Z'
       },
       {
         bookingId: 'BK-2026-004',
         bookingReference: 'HLM-INTL04',
         bookingType: 'frequent_traveller',
-        userId: null,
+        travelPurpose: 'online',
+        bookedByUserId: 'USR-FT-001',
+        bookedByRole: 'frequent_traveller',
+        userId: 'USR-FT-001',
         memberId: 'FT-001',
         visitorId: null,
         passengerName: 'Raka Mahendra',
         passengerEmail: 'raka.mahendra@example.id',
         passengerPhone: '+6281122334455',
         identityNumber: '3573011505950001',
+        nationality: 'Indonesia',
+        passengerCount: 1,
+        passengers: [
+          { fullName: 'Raka Mahendra', identityNumber: '3573011505950001', nationality: 'Indonesia', seatNumber: '11A', seatFee: 0 }
+        ],
         flightId: 'FL-SQ953',
         flightNumber: 'SQ-953',
         airline: 'Singapore Airlines',
@@ -1047,17 +1268,26 @@ function createInitialState() {
         date: '2026-11-20',
         departureTime: '07:55',
         arrivalTime: '10:45',
-        price: 2650000,
+        basePrice: 2650000,
+        price: 3662500,
         cabinClass: 'Economy',
         fareTier: 'Flex',
         seatNumber: '11A',
         terminalOrigin: 'Terminal 3',
         gate: 'G02',
+        paymentMethod: 'International Card (Visa / Mastercard)',
+        paymentCurrency: 'IDR',
+        paidAmount: 3662500,
+        paidAt: '2026-11-16T12:15:00Z',
         status: 'confirmed',
         authorizedByTravelManager: true,
+        authorizedByUserId: 'USR-TM-001',
         authorizedAt: '2026-11-16T12:15:00Z',
+        authorizationNote: 'Pembayaran tiket internasional terkonfirmasi.',
         ticketValidated: true,
+        validatedAt: '2026-11-16T12:15:00Z',
         eTicketNumber: 'ETKT-SQ953-9004',
+        milesEarned: 2650,
         createdAt: '2026-11-16T12:00:00Z'
       }
     ],
@@ -1087,6 +1317,43 @@ function createInitialState() {
           seatNumber: '18B',
           status: 'waiting for the payment'
         }
+      }
+    ],
+
+    // --- AUDIT TRAIL (HR & OPERASIONAL TRAVEL) ---
+    auditLogs: [
+      {
+        auditId: 'AUD-2026-001',
+        actorUserId: 'USR-HR-001',
+        actorName: 'Dewi Lestari',
+        actorRole: 'hr_manager',
+        action: 'LEAVE_APPROVED',
+        entityType: 'leave_request',
+        entityId: 'LV-2026-002',
+        summary: 'Menyetujui cuti Budi Santoso (5 hari: 2026-11-20 s/d 2026-11-24).',
+        createdAt: '2026-11-02T09:30:00Z'
+      },
+      {
+        auditId: 'AUD-2026-002',
+        actorUserId: 'USR-TM-001',
+        actorName: 'Hendrawan Wijaya',
+        actorRole: 'travel_manager',
+        action: 'BOOKING_AUTHORIZED',
+        entityType: 'booking',
+        entityId: 'HLM-INTL04',
+        summary: 'Mengotorisasi booking internasional Raka Mahendra (CGK -> SIN, SQ-953).',
+        createdAt: '2026-11-16T12:15:00Z'
+      },
+      {
+        auditId: 'AUD-2026-003',
+        actorUserId: 'USR-003',
+        actorName: 'Andi Pratama',
+        actorRole: 'employee',
+        action: 'VISITOR_BOOKED',
+        entityType: 'booking',
+        entityId: 'HLM-WAIT03',
+        summary: 'Membuat reservasi loket offline untuk Dimas Anggara (ID-6502 CGK -> DPS) & mengirim e-tiket.',
+        createdAt: '2026-11-16T09:45:05Z'
       }
     ]
   };
